@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+
     private static bool s_pause;
     public static bool GlobalPause
     {
         get => s_pause || s_hitpause;
         set => s_pause = value;
     }
-
+    
     private static float s_hitpauseTime;
     private static bool s_hitpause;
     public static bool Hitpause
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
         get => s_hitpause;
         private set
         {
-            Time.timeScale = value ? 1 : 0.001f;
+            Time.timeScale = value ? 0.001f : 1;
             s_hitpause = value;
         }
     }
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
         s_hitpauseTime = Mathf.Max(s_hitpauseTime, time);
         Hitpause = true;
     }
-
+    
     private void Awake()
     {
         Application.targetFrameRate = 60;
@@ -36,8 +37,8 @@ public class GameManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (s_hitpauseTime > Time.deltaTime)
-            s_hitpauseTime -= Time.deltaTime;
+        if (s_hitpauseTime > Time.unscaledDeltaTime)
+            s_hitpauseTime -= Time.unscaledDeltaTime;
         else
             Hitpause = false;
     }
