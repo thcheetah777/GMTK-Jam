@@ -7,7 +7,7 @@ public class CircleFieldCollider : MonoBehaviour
     public List<Circle> circles;
 
     /// <summary>
-    /// Checks whether a given position is within a radius of the circle field.
+    /// Checks whether a given position is within the given radius of the circle field.
     /// </summary>
     public bool Check(Vector2 position, float radius) => circles.TrueForAll(circle => (circle.position - position).sqrMagnitude <= (radius + circle.radius) * (radius + circle.radius));
     /// <summary>
