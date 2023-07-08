@@ -40,8 +40,8 @@ public class CircleFieldEditor : Editor
         for (int i = 0; i < circleFieldCollider.circles.Count; i++)
         {
             Undo.RecordObject(circleFieldCollider, "Edit Circle Field Collider");
-            Vector2 positionHandle = Handles.FreeMoveHandle(circleFieldCollider.circles[i].position, Quaternion.identity, 0.25f, EditorUtils.MoveSnap(), Handles.DotHandleCap);
-            Vector2 radiusHandle = Handles.FreeMoveHandle(positionHandle + circleFieldCollider.circles[i].radius * Vector2.right, Quaternion.identity, 0.25f, EditorUtils.MoveSnap(), Handles.DotHandleCap);
+            Vector2 positionHandle = Handles.FreeMoveHandle(circleFieldCollider.circles[i].position, Quaternion.identity, 0.25f, EditorSnapSettings.move, Handles.DotHandleCap);
+            Vector2 radiusHandle = Handles.FreeMoveHandle(positionHandle + circleFieldCollider.circles[i].radius * Vector2.right, Quaternion.identity, 0.25f, EditorSnapSettings.move, Handles.DotHandleCap);
             float radius = (radiusHandle - positionHandle).x;
             circleFieldCollider.circles[i] = new Circle(positionHandle, radius);
             Handles.DrawWireDisc(positionHandle, Vector3.back, radius);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CircleFieldCollider))]
 public class Trap : MonoBehaviour
@@ -26,12 +27,16 @@ public class Trap : MonoBehaviour
 
     private new CircleFieldCollider collider;
 
+    static Trap()
+    {
+        All = new();
+        SceneManager.activeSceneChanged += (oldScene, newScene) => All = new();
+    }
+
     private void Awake()
     {
         collider = GetComponent<CircleFieldCollider>();
 
-        if (All == null)
-            All = new();
         All.Add(this);
     }
 
