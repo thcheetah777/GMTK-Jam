@@ -138,6 +138,10 @@ public class HordeController : PausableMonoBehaviour
     [SerializeField] private float minDragDistance;
     private bool m_dragging;
 
+    [Header("Rat Movement")]
+    [SerializeField] private float ratDistancingSpeed;
+    [SerializeField] private AnimationCurve ratDistancingWeight;
+
     [Header("Click Flags")]
     [SerializeField] private float clickFlagRadius;
 
@@ -164,6 +168,22 @@ public class HordeController : PausableMonoBehaviour
             OnHold();
         else if (Input.GetMouseButtonUp(0))
             OnRelease();
+
+        // Push rats away from each other.
+        foreach (Rat rat in Rats)
+            foreach (Rat other in Rats)
+                if (rat != other)
+                {
+                    Vector3 distVector = rat.transform.position - other.transform.position;
+                    float dist = distVector.magnitude;
+                    float weightedDist = ratDistancingWeight.Evaluate(dist);
+                    if (weightedDist == 0)
+                        continue;
+
+                    Vector3 scaledDistVector = distVector * ratDistancingSpeed * weightedDist / dist * Time.deltaTime;
+                    rat.transform.position += scaledDistVector;
+                    other.transform.position -= scaledDistVector;
+                }
     }
 
     private void OnDestroy()
