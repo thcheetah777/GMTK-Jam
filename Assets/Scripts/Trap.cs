@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    public static List<Trap> All;
+    private static List<Trap> All;
 
     /// <summary>
     /// Checks whether a given position is within the given radius of any trao.
