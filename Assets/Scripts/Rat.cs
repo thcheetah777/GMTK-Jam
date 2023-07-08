@@ -5,14 +5,14 @@ using UnityEngine;
 public class Rat : MonoBehaviour
 {
     [HideInInspector] public int flagIndex;
-    private Vector3 flag => flagIndex != -1 ? HordeController.Flags[flagIndex] : transform.position;
+    private Vector3 flag => flagIndex != -1 ? HordeController.GetFlag(flagIndex) : transform.position;
 
     [SerializeField] private float movementSpeed;
 
     private void Awake()
     {
         // Add this rat to the global horde.
-        HordeController.Rats.Add(this);
+        HordeController.AddRat(this);
         flagIndex = -1;
     }
 

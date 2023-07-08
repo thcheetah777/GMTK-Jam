@@ -11,22 +11,98 @@ public class HordeController : MonoBehaviour
         get
         {
             if (s_rats == null)
-                s_rats = new List<Rat>();
+                s_rats = new();
             return s_rats;
         }
         set => s_rats = value;
     }
 
+    /// <summary>
+    /// Adds a rat to the global horde.
+    /// </summary>
+    public static void AddRat(Rat rat) => Rats.Add(rat);
+
     private static List<Vector3> s_flags;
-    public static List<Vector3> Flags
+    private static List<int> s_flagReferenceCounts;
+
+    /// <summary>
+    /// Gets the flag at the given index.
+    /// </summary>
+    public static Vector3 GetFlag(int index) => s_flags[index];
+
+    /// <summary>
+    /// Creates a new flag at the given position.
+    /// </summary>
+    public static void CreateFlag(Vector3 flag)
     {
-        get
+        if (s_flags == null)
         {
-            if (s_flags == null)
-                s_flags = new List<Vector3>();
-            return s_flags;
+            s_flags = new();
+            s_flagReferenceCounts = new();
         }
-        set => s_flags = value;
+        s_flags.Add(flag);
+        s_flagReferenceCounts.Add(0);
+    }
+
+    /// <summary>
+    /// Changes the flag the rat at the given index in the horde is focusing.
+    /// </summary>
+    public static void FocusRat(int ratIndex, int flagIndex)
+    {
+        Rat rat = Rats[ratIndex];
+
+        if (rat.flagIndex != -1)
+            s_flagReferenceCounts[rat.flagIndex]--;
+        Rats[ratIndex].flagIndex = flagIndex;
+        if (flagIndex != -1)
+            s_flagReferenceCounts[flagIndex]++;
+
+        CleanupUnusedFlags();
+    }
+    /// <summary>
+    /// Focuses the rat at the given index in the horde on the last flag in the list.
+    /// </summary>
+    public static void FocusRat(int ratIndex) => FocusRat(ratIndex, s_flags.Count - 1);
+
+    /// <summary>
+    /// Deletes all flags that are not focused by any rats.
+    /// </summary>
+    private static void CleanupUnusedFlags()
+    {
+        List<int> flagIndicesToDelete = new();
+
+        // Iterate through the list of flag reference counts and mark the ones equal to 0 for deletion.
+        for (int i = 0; i < s_flagReferenceCounts.Count; i++)
+            if (s_flagReferenceCounts[i] == 0)
+                flagIndicesToDelete.Add(i);
+
+        // Return from the function early if every flag is focused by at least one rat.
+        if (flagIndicesToDelete.Count == 0)
+            return;
+
+        // Iterate through the list of flag indeces marked for deletion to overwrite them.
+        int indecesDeleted = 0;
+        for (int i = 0; i + indecesDeleted < s_flags.Count; i++)
+        {
+            if (indecesDeleted != 0)
+            {
+                // Overwrite flags earlier in the list with flags later in the list.
+                s_flags[i] = s_flags[i + indecesDeleted];
+                s_flagReferenceCounts[i] = s_flagReferenceCounts[i + indecesDeleted];
+
+                // Adjust the rats' flag indeces as data is being moved up in the list.
+                foreach (Rat rat in Rats)
+                    if (rat.flagIndex == i + indecesDeleted)
+                        rat.flagIndex = i;
+            }
+            // If the flag at this index was permanently deleted, increment the number of indeces deleted so far.
+            if (i == flagIndicesToDelete[indecesDeleted])
+                indecesDeleted++;
+        }
+
+        // Remove the indices at the end of the list after all of their data has been either copied to earlier entries or removed.
+        s_flags.RemoveRange(s_flags.Count - indecesDeleted, indecesDeleted - 1);
+        s_flagReferenceCounts.RemoveRange(s_flagReferenceCounts.Count - indecesDeleted, indecesDeleted - 1);
     }
 
     private Vector3 m_mouseGroundPosition;
@@ -51,8 +127,6 @@ public class HordeController : MonoBehaviour
 
     private void Awake()
     {
-        Flags = null;
-
         // Cache components.
         m_rakeCollider = GetComponent<EdgeCollider2D>();
     }
@@ -61,11 +135,29 @@ public class HordeController : MonoBehaviour
     {
         // Handle input events.
         if (Input.GetMouseButtonDown(0))
-            OnClick();
+            OnPress();
         if (Input.GetMouseButton(0))
             OnHold();
         else if (Input.GetMouseButtonUp(0))
             OnRelease();
+
+        //if (s_flagReferenceCounts != null)
+           // Debug.Log(s_flagReferenceCounts.Count);
+    }
+
+    private void OnDestroy()
+    {
+        s_rats = null;
+
+        s_flags = null;
+        s_flagReferenceCounts = null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Rat rat;
+        if (collision.TryGetComponent(out rat))
+            FocusRat(Rats.IndexOf(rat));
     }
 
     private void OnHold()
@@ -95,40 +187,47 @@ public class HordeController : MonoBehaviour
         if (!m_dragging && (m_holdTimer > maxClickTime || Vector3.Distance(m_initialMouseGroundPosition, m_mouseGroundPosition) > minDragDistance))
         {
             m_dragging = true;
-            m_holdTimer = maxClickTime;
+            OnDragConfirm();
         }
         if (m_dragging)
             OnDrag();
     }
 
-    private void OnClick()
+    private void OnPress()
     {
         // Capture the initial ground position the mouse clicks.
         CalculateMouseGroundPosition();
         m_initialMouseGroundPosition = m_mouseGroundPosition;
     }
 
-    private void OnClickConfirm()
+    private void OnClick()
     {
         transform.position = m_mouseGroundPosition;
 
         // Set a flag at the clicked position and focus every rat within the click flag radius on it.
-        Flags.Add(m_mouseGroundPosition);
-        foreach (Rat rat in Rats)
-            if ((rat.transform.position - m_mouseGroundPosition).sqrMagnitude <= clickFlagRadius * clickFlagRadius)
-                rat.flagIndex = Flags.Count - 1;
+        CreateFlag(m_mouseGroundPosition);
+        for (int i = 0; i < Rats.Count; i++)
+            if ((Rats[i].transform.position - m_mouseGroundPosition).sqrMagnitude <= clickFlagRadius * clickFlagRadius)
+                FocusRat(i);
+    }
+
+    private void OnDragConfirm()
+    {
+        m_holdTimer = maxClickTime;
+        CreateFlag(m_mouseGroundPosition);
     }
 
     private void OnDrag()
     {
         SetRakeColliderWidth(m_holdTimer >= maxClickTime + rakeStartupTime ? rakeWidth : rakeWidth * (m_holdTimer - maxClickTime) / rakeStartupTime);
+        s_flags[^1] = m_mouseGroundPosition;
     }
 
     private void OnRelease()
     {
         // Treat the mouse action as a click if the mouse has been held short enough and has not strayed too far from its initial position.
         if (m_holdTimer < maxClickTime && Vector3.Distance(m_initialMouseGroundPosition, m_mouseGroundPosition) <= minDragDistance)
-            OnClickConfirm();
+            OnClick();
 
         // Reset data about the mouse action.
         m_holdTimer = 0;
@@ -148,7 +247,7 @@ public class HordeController : MonoBehaviour
 
     private void SetRakeColliderWidth(float width)
     {
-        m_rakeCollider.SetPoints(new List<Vector2>()
+        m_rakeCollider.SetPoints(new()
         {
             width / 2 * Vector2.right,
             width / 2 * Vector2.left
