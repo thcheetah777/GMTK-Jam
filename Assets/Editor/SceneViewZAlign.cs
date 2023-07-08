@@ -11,7 +11,7 @@
 // Akulist's original: https://forum.unity.com/threads/change-scene-view-camera-behaviour.649624/
 // Unity's original: https://github.com/Unity-Technologies/UnityCsReference/blob/master/Editor/Mono/SceneView/SceneViewMotion.cs
 
-// THANK YOU SO SO SO SO SO MUCH FREYA HOLMIR FOR THIS SCRIPT
+// THANK YOU SO SO SO SO SO MUCH FREYA HOLMÉR FOR THIS SCRIPT
 // WHAT CAN SHE NOT DO
 
 using UnityEditor;
