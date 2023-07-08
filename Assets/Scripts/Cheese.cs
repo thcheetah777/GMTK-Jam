@@ -50,7 +50,8 @@ public class Cheese : MonoBehaviour
 
     private void Move(float speed) {
         Vector2 direction = HordeController.Rats[0].transform.position;
-        transform.position = Vector2.MoveTowards(transform.position, direction, speed * Time.deltaTime);
+        Vector3 targetPos = new Vector3(direction.x, direction.y, transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
     }
 
 }
