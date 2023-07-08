@@ -30,7 +30,7 @@ public class Trap : MonoBehaviour
     static Trap()
     {
         All = new();
-        SceneManager.activeSceneChanged += (oldScene, newScene) => All = new();
+        SceneManager.activeSceneChanged += (oldScene, newScene) => All.Clear();
     }
 
     private void Awake()
