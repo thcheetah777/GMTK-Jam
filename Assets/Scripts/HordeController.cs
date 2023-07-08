@@ -79,14 +79,30 @@ public class HordeController : MonoBehaviour
         // Return from the function early if every flag is focused by at least one rat.
         if (indecesToDelete.Count == 0)
             return;
+        // Reset the list of flags and return from the function early if all of them are to be deleted.
+        if (indecesToDelete.Count == s_flags.Count)
+        {
+            s_flags.Clear();
+            s_flagRefCounts.Clear();
+
+            foreach (Rat rat in Rats)
+                if (rat.flagIndex != -1)
+                    rat.flagIndex = 0;
+
+            return;
+        }
 
         // Iterate through the list of flag indeces marked for deletion to overwrite them.
         int indecesDeleted = 0;
-        for (int i = 0; i + indecesDeleted + 1 < s_flags.Count; i++)
+
+        for (int i = 0; i + indecesDeleted < s_flags.Count; i++)
         {
-            // If the flag at this index is to be permanently deleted, increment the number of deleted indeces.
-            if (i == indecesToDelete[indecesDeleted])
-                indecesDeleted++;
+            while (indecesToDelete[indecesDeleted] == i)
+                i++;
+
+            // Exit the loop early if all indeces marked for deletion have been overwritten.
+            if (i + indecesDeleted >= s_flags.Count)
+                break;
 
             if (indecesDeleted != 0)
             {
