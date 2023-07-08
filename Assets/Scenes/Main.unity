@@ -417,14 +417,14 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.002057613
-    width: 0.99999994
-    height: 0.9958847
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 8.066667
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -448,7 +448,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172592709}
   m_LocalRotation: {x: 0.13277537, y: 0, z: 0, w: 0.99114615}
-  m_LocalPosition: {x: 0, y: 0, z: -16.45}
+  m_LocalPosition: {x: 0, y: -20, z: -16.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -484,7 +484,7 @@ MonoBehaviour:
   m_AssetsPPU: 15
   m_RefResolutionX: 320
   m_RefResolutionY: 180
-  m_CropFrame: 0
+  m_CropFrame: 3
   m_GridSnapping: 2
   m_UpscaleRT: 0
   m_PixelSnapping: 0
@@ -1622,8 +1622,8 @@ MonoBehaviour:
   minDragDistance: 1.5
   clickFlagRadius: 20
   rakeWidth: 8
-  rakeStartupTime: 0.1
-  maxMouseSmoothSteps: 10
+  rakeStartupTime: 0.2
+  maxMouseSmoothSteps: 15
 --- !u!120 &901541215
 LineRenderer:
   m_ObjectHideFlags: 0
