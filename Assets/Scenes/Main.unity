@@ -2307,6 +2307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 240
+  trapInvinicibilityTime: 0
   ratLayer:
     serializedVersion: 2
     m_Bits: 8

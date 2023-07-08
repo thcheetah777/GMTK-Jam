@@ -114,5 +114,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 4
+  trapInvinicibilityTime: 0.25
   flagIndex: 0
   movementSpeed: 10

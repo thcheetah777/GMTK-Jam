@@ -7,10 +7,21 @@ public class LivingEntity : MonoBehaviour
     [Header("Living Entity Properties")]
     [SerializeField] protected int maxHealth;
     protected int health;
-    private CircleCollider2D collider;
+    [SerializeField] private float trapInvinicibilityTime;
+    private new CircleCollider2D collider;
 
-    /*private void Update()
+    private void Awake()
     {
-        if ()
-    }*/
+        collider = GetComponent<CircleCollider2D>();
+        StartCoroutine(TrapCheck());
+    }
+
+    private IEnumerator TrapCheck()
+    {
+        while (true)
+            if (Trap.Check(collider))
+                yield return new WaitForSeconds(trapInvinicibilityTime);
+            else
+                yield return null;
+    }
 }
