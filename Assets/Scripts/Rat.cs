@@ -8,8 +8,10 @@ public class Rat : LivingEntity
     [Header("Rat Properties")]
     [SerializeField] private float movementSpeed;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // Add this rat to the global horde.
         HordeController.AddRat(this);
         flagIndex = -1;
@@ -17,8 +19,13 @@ public class Rat : LivingEntity
 
     public override void PausableUpdate()
     {
-        base.PausableUpdate();
         // Follow focused flag.
         transform.Translate((flag - transform.position).normalized * movementSpeed * Time.deltaTime);
+    }
+
+    protected override void OnDeath()
+    {
+        HordeController.RemoveRat(this);
+        Destroy(gameObject);
     }
 }

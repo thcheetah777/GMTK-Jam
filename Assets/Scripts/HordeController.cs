@@ -20,6 +20,15 @@ public class HordeController : PausableMonoBehaviour
     /// </summary>
     public static void AddRat(Rat rat) => Rats.Add(rat);
 
+    /// <summary>
+    /// Removes a rat from the global horde.
+    /// </summary>
+    public static void RemoveRat(Rat rat)
+    {
+        Rats.Remove(rat);
+        CleanupUnusedFlags();
+    }
+
     private static List<Vector3> s_flags;
     private static List<int> s_flagRefCounts;
 

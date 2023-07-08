@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &14921572 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 728838389013215492, guid: c4f36da54a6762345a3c1dba15549484, type: 3}
-  m_PrefabInstance: {fileID: 728838389002884704}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &82151718
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92df6097521de024599b8f5c378e6aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 14921572}
+  target: {fileID: 250009084}
 --- !u!114 &172592715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2307,6 +2302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1253283214}
+  - component: {fileID: 1253283216}
   - component: {fileID: 1253283215}
   m_Layer: 0
   m_Name: Cheese
@@ -2314,7 +2310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1253283214
 Transform:
   m_ObjectHideFlags: 0
@@ -2345,7 +2341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 240
-  trapInvinicibilityTime: 0
+  trapInvinicibilityTime: 0.5
   ratLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -2355,6 +2351,22 @@ MonoBehaviour:
   _farSpeed: 2
   _mediumSpeed: -2
   _closeSpeed: -5.5
+--- !u!58 &1253283216
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253283213}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1259926671
 GameObject:
   m_ObjectHideFlags: 0
@@ -3200,6 +3212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1700327912}
   - component: {fileID: 1700327911}
+  - component: {fileID: 1700327913}
   m_Layer: 0
   m_Name: Test CircleFieldCollider
   m_TagString: Untagged
@@ -3220,7 +3233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circles:
-  - position: {x: 0, y: 0}
+  - position: {x: 13.5, y: -11.75}
     radius: 10
   - position: {x: 5, y: 10}
     radius: 5
@@ -3239,6 +3252,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1700327913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700327910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bc31f62fc081e4d8c543350d53a982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1809806981
 GameObject:
   m_ObjectHideFlags: 0

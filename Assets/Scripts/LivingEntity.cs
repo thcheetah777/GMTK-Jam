@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class LivingEntity : PausableMonoBehaviour
+[RequireComponent(typeof(CircleCollider2D))]
+public abstract class LivingEntity : PausableMonoBehaviour
 {
     [Header("Living Entity Properties")]
     [SerializeField] protected int maxHealth;
@@ -9,7 +10,7 @@ public class LivingEntity : PausableMonoBehaviour
     [SerializeField] private float trapInvinicibilityTime;
     private new CircleCollider2D collider;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         health = maxHealth;
 
@@ -23,9 +24,16 @@ public class LivingEntity : PausableMonoBehaviour
             if (Trap.Check(collider) && !GameManager.GlobalPause)
             {
                 health -= Trap.Damage;
+                if (health <= 0)
+                {
+                    OnDeath();
+                    break;
+                }
                 yield return new WaitForSeconds(trapInvinicibilityTime);
             }
             else
                 yield return null;
     }
+
+    protected abstract void OnDeath();
 }

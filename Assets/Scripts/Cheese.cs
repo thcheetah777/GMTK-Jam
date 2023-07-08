@@ -24,6 +24,8 @@ public class Cheese : LivingEntity
 
     private CheeseState _state;
 
+    protected override void Awake() => base.Awake();
+
     public override void PausableUpdate() {
         _state = CheeseState.Close;
 
@@ -54,4 +56,8 @@ public class Cheese : LivingEntity
         transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
     }
 
+    protected override void OnDeath()
+    {
+
+    }
 }

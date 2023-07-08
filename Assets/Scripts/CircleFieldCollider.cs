@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CircleFieldCollider : PausableMonoBehaviour
@@ -8,7 +9,7 @@ public class CircleFieldCollider : PausableMonoBehaviour
     /// <summary>
     /// Checks whether a given position is within the given radius of the circle field.
     /// </summary>
-    public bool Check(Vector2 position, float radius) => circles.TrueForAll(circle => (circle.position - position).sqrMagnitude <= (radius + circle.radius) * (radius + circle.radius));
+    public bool Check(Vector2 position, float radius) => circles.Any(circle => (circle.position - position).sqrMagnitude <= (radius + circle.radius) * (radius + circle.radius));
     /// <summary>
     /// Checks whether a given circle overlaps the circle field.
     /// </summary>
