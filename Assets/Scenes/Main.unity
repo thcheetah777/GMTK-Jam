@@ -468,10 +468,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.1183882
+    y: 0.054455448
+    width: 0.76276964
+    height: 0.89108914
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1881,28 +1881,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxClickTime: 0.25
   minDragDistance: 1.5
-  ratDistancingSpeed: 1
+  ratDistancingSpeed: 3
   ratDistancingWeight:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 2
-      inSlope: Infinity
-      outSlope: Infinity
+      time: 0.038850546
+      value: 3.592711
+      inSlope: 0.04419029
+      outSlope: 0.04419029
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 1
     - serializedVersion: 3
-      time: 0.75
-      value: 1.5
-      inSlope: -0.6666667
-      outSlope: -0.7037912
+      time: 1.3983002
+      value: 3.5072098
+      inSlope: -0.06289398
+      outSlope: -0.60397196
       tangentMode: 5
       weightedMode: 0
       inWeight: 1
-      outWeight: 0.22564103
+      outWeight: 0.2596224
     - serializedVersion: 3
       time: 5
       value: 0
@@ -1915,7 +1915,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  clickFlagRadius: 20
+  clickFlagRadius: 50
   rakeWidth: 8
   rakeStartupTime: 0.2
   maxMouseSmoothSteps: 15
