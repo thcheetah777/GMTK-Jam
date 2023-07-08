@@ -527,9 +527,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.002057613
-    width: 0.99999994
-    height: 0.9958847
+    y: 0
+    width: 0.5085131
+    height: 0.7920792
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -2418,12 +2418,12 @@ MonoBehaviour:
   ratLayer:
     serializedVersion: 2
     m_Bits: 8
-  _farRange: 5
-  _mediumRange: 3
+  _farRange: 10
+  _mediumRange: 5
   _closeRange: 2
-  _farSpeed: 5
-  _mediumSpeed: -1
-  _closeSpeed: -10
+  _farSpeed: 2
+  _mediumSpeed: -2
+  _closeSpeed: -5.5
 --- !u!1 &1259926671
 GameObject:
   m_ObjectHideFlags: 0
