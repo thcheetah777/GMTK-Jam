@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : PausableMonoBehaviour
 {
     [SerializeField] private Transform target;
 
-    private void Update()
+    public override void PausableUpdate()
     {
         transform.rotation = Quaternion.LookRotation(target.position - transform.position, Vector3.back);
     }

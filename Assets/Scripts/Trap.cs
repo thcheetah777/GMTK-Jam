@@ -3,9 +3,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CircleFieldCollider))]
-public class Trap : MonoBehaviour
+public class Trap : PausableMonoBehaviour
 {
     private static List<Trap> All;
+
+    public static int Damage = 4;
 
     /// <summary>
     /// Checks whether a given position is within the given radius of any trao.

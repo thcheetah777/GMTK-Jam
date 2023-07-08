@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class LivingEntity : MonoBehaviour
+public class LivingEntity : PausableMonoBehaviour
 {
     [Header("Living Entity Properties")]
     [SerializeField] protected int maxHealth;
@@ -11,6 +11,8 @@ public class LivingEntity : MonoBehaviour
 
     private void Awake()
     {
+        health = maxHealth;
+
         collider = GetComponent<CircleCollider2D>();
         StartCoroutine(TrapCheck());
     }
@@ -18,8 +20,11 @@ public class LivingEntity : MonoBehaviour
     private IEnumerator TrapCheck()
     {
         while (true)
-            if (Trap.Check(collider))
+            if (Trap.Check(collider) && !GameManager.GlobalPause)
+            {
+                health -= Trap.Damage;
                 yield return new WaitForSeconds(trapInvinicibilityTime);
+            }
             else
                 yield return null;
     }

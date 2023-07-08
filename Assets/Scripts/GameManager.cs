@@ -1,26 +1,21 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : PausableMonoBehaviour
 {
 
     private static bool s_pause;
     public static bool GlobalPause
     {
-        get => s_pause || s_hitpause;
-        set => s_pause = value;
+        get => s_pause || Hitpause;
+        set
+        {
+            Time.timeScale = value ? 0.001f : 1;
+            s_pause = value;
+        }
     }
     
     private static float s_hitpauseTime;
-    private static bool s_hitpause;
-    public static bool Hitpause
-    {
-        get => s_hitpause;
-        private set
-        {
-            Time.timeScale = value ? 0.001f : 1;
-            s_hitpause = value;
-        }
-    }
+    public static bool Hitpause { get; private set; }
 
     public static void ApplyHitpause(float time)
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CircleFieldCollider : MonoBehaviour
+public class CircleFieldCollider : PausableMonoBehaviour
 {
     public List<Circle> circles;
 

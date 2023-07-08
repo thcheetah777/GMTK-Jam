@@ -15,8 +15,9 @@ public class Rat : LivingEntity
         flagIndex = -1;
     }
 
-    private void Update()
+    public override void PausableUpdate()
     {
+        base.PausableUpdate();
         // Follow focused flag.
         transform.Translate((flag - transform.position).normalized * movementSpeed * Time.deltaTime);
     }

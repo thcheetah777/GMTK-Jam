@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CheeseBar : MonoBehaviour {
+public class CheeseBar : PausableMonoBehaviour {
     public const float maxhealth = 100f;
     [Range(0.0f, maxhealth)]
     public float health = 100f;
@@ -32,7 +32,7 @@ public class CheeseBar : MonoBehaviour {
         iconBRenderer = iconBRendererObj.GetComponent<Image>();
     }
 
-    void Update() {
+    public override void PausableUpdate() {
         float mul = maxhealth / (baseSprites.Length - 1);
         int index = (int)Mathf.Ceil((maxhealth - health) / mul);
         int nindex = index - 1;

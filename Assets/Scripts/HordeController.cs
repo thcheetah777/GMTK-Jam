@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HordeController : MonoBehaviour
+public class HordeController : PausableMonoBehaviour
 {
     private static List<Rat> s_rats;
     public static List<Rat> Rats
@@ -146,7 +146,7 @@ public class HordeController : MonoBehaviour
         m_rakeCollider = GetComponent<EdgeCollider2D>();
     }
 
-    private void Update()
+    public override void PausableUpdate()
     {
         // Handle input events.
         if (Input.GetMouseButtonDown(0))

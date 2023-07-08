@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CheeseWeapon : MonoBehaviour
+public class CheeseWeapon : PausableMonoBehaviour
 {
 
     [SerializeField] private float _weaponDelay;
@@ -15,7 +15,10 @@ public class CheeseWeapon : MonoBehaviour
     IEnumerator Start() {
         while (true) {
             yield return new WaitForSeconds(_weaponDelay);
-            UseShotgun();
+            if (!GameManager.GlobalPause)
+                UseShotgun();
+            else
+                yield return null;
         }
     }
 

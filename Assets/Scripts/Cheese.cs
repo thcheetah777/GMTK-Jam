@@ -24,7 +24,7 @@ public class Cheese : LivingEntity
 
     private CheeseState _state;
 
-    void Update() {
+    public override void PausableUpdate() {
         _state = CheeseState.Close;
 
         float distanceFromRat = Vector2.Distance(transform.position, HordeController.Rats[0].transform.position);
