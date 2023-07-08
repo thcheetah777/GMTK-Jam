@@ -451,14 +451,14 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.002057613
-    width: 0.99999994
-    height: 0.9958847
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 0
-  orthographic size: 8.066667
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   minDragDistance: 1.5
   clickFlagRadius: 20
   rakeWidth: 8
-  rakeStartupTime: 0.05
+  rakeStartupTime: 0.016666668
   maxMouseSmoothSteps: 7
 --- !u!120 &901541215
 LineRenderer:
@@ -1361,7 +1361,7 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0.5
+  m_EdgeRadius: 1
   m_Points:
   - {x: 0, y: 0}
   - {x: 0, y: 0}

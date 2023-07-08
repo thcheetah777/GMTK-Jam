@@ -23,7 +23,7 @@ public class HordeController : MonoBehaviour
     public static void AddRat(Rat rat) => Rats.Add(rat);
 
     private static List<Vector3> s_flags;
-    private static List<int> s_flagReferenceCounts;
+    private static List<int> s_flagRefCounts;
 
     /// <summary>
     /// Gets the flag at the given index.
@@ -38,10 +38,10 @@ public class HordeController : MonoBehaviour
         if (s_flags == null)
         {
             s_flags = new();
-            s_flagReferenceCounts = new();
+            s_flagRefCounts = new();
         }
         s_flags.Add(flag);
-        s_flagReferenceCounts.Add(0);
+        s_flagRefCounts.Add(0);
     }
 
     /// <summary>
@@ -52,10 +52,10 @@ public class HordeController : MonoBehaviour
         Rat rat = Rats[ratIndex];
 
         if (rat.flagIndex != -1)
-            s_flagReferenceCounts[rat.flagIndex]--;
+            s_flagRefCounts[rat.flagIndex]--;
         Rats[ratIndex].flagIndex = flagIndex;
         if (flagIndex != -1)
-            s_flagReferenceCounts[flagIndex]++;
+            s_flagRefCounts[flagIndex]++;
 
         CleanupUnusedFlags();
     }
@@ -69,40 +69,41 @@ public class HordeController : MonoBehaviour
     /// </summary>
     private static void CleanupUnusedFlags()
     {
-        List<int> flagIndicesToDelete = new();
+        List<int> indecesToDelete = new();
 
         // Iterate through the list of flag reference counts and mark the ones equal to 0 for deletion.
-        for (int i = 0; i < s_flagReferenceCounts.Count; i++)
-            if (s_flagReferenceCounts[i] == 0)
-                flagIndicesToDelete.Add(i);
+        for (int i = 0; i < s_flagRefCounts.Count; i++)
+            if (s_flagRefCounts[i] == 0)
+                indecesToDelete.Add(i);
 
         // Return from the function early if every flag is focused by at least one rat.
-        if (flagIndicesToDelete.Count == 0)
+        if (indecesToDelete.Count == 0)
             return;
 
         // Iterate through the list of flag indeces marked for deletion to overwrite them.
         int indecesDeleted = 0;
-        for (int i = 0; i + indecesDeleted < s_flags.Count; i++)
+        for (int i = 0; i + indecesDeleted + 1 < s_flags.Count; i++)
         {
+            // If the flag at this index is to be permanently deleted, increment the number of deleted indeces.
+            if (i == indecesToDelete[indecesDeleted])
+                indecesDeleted++;
+
             if (indecesDeleted != 0)
             {
                 // Overwrite flags earlier in the list with flags later in the list.
                 s_flags[i] = s_flags[i + indecesDeleted];
-                s_flagReferenceCounts[i] = s_flagReferenceCounts[i + indecesDeleted];
+                s_flagRefCounts[i] = s_flagRefCounts[i + indecesDeleted];
 
                 // Adjust the rats' flag indeces as data is being moved up in the list.
                 foreach (Rat rat in Rats)
                     if (rat.flagIndex == i + indecesDeleted)
                         rat.flagIndex = i;
             }
-            // If the flag at this index was permanently deleted, increment the number of indeces deleted so far.
-            if (i == flagIndicesToDelete[indecesDeleted])
-                indecesDeleted++;
         }
 
-        // Remove the indices at the end of the list after all of their data has been either copied to earlier entries or removed.
-        s_flags.RemoveRange(s_flags.Count - indecesDeleted, indecesDeleted - 1);
-        s_flagReferenceCounts.RemoveRange(s_flagReferenceCounts.Count - indecesDeleted, indecesDeleted - 1);
+        // Remove the indeces at the end of the list after all of their data has been either copied to earlier entries or removed.
+        s_flags.RemoveRange(s_flags.Count - indecesDeleted, indecesDeleted);
+        s_flagRefCounts.RemoveRange(s_flagRefCounts.Count - indecesDeleted, indecesDeleted);
     }
 
     private Vector3 m_mouseGroundPosition;
@@ -140,9 +141,6 @@ public class HordeController : MonoBehaviour
             OnHold();
         else if (Input.GetMouseButtonUp(0))
             OnRelease();
-
-        //if (s_flagReferenceCounts != null)
-           // Debug.Log(s_flagReferenceCounts.Count);
     }
 
     private void OnDestroy()
@@ -150,7 +148,7 @@ public class HordeController : MonoBehaviour
         s_rats = null;
 
         s_flags = null;
-        s_flagReferenceCounts = null;
+        s_flagRefCounts = null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
