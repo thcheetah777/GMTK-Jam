@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CircleFieldCollider))]
 public class Trap : MonoBehaviour
 {
     private static List<Trap> All;
