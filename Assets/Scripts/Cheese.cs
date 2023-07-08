@@ -7,9 +7,9 @@ enum CheeseState
     Close
 }
 
-public class Cheese : MonoBehaviour
+public class Cheese : LivingEntity
 {
-
+    [Header("Cheese Properties")]
     [SerializeField] private LayerMask ratLayer;
 
     [Header("State")]

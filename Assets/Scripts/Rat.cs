@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rat : MonoBehaviour
+public class Rat : LivingEntity
 {
     [HideInInspector] public int flagIndex;
     private Vector3 flag => flagIndex != -1 ? HordeController.GetFlag(flagIndex) : transform.position;
 
+    [Header("Rat Properties")]
     [SerializeField] private float movementSpeed;
 
     private void Awake()

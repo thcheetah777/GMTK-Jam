@@ -447,8 +447,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172592709}
-  m_LocalRotation: {x: -0.42706358, y: 0, z: -0, w: 0.9042216}
-  m_LocalPosition: {x: 0, y: -20, z: -16.45}
+  m_LocalRotation: {x: -0.3648171, y: 0.1651468, z: -0.37788588, w: 0.8347678}
+  m_LocalPosition: {x: -22, y: -19.32, z: -27.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2306,6 +2306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916af660b58e4144a8c05ded96740b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 240
   ratLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -3149,6 +3150,55 @@ MonoBehaviour:
   _shotgunBulletPrefab: {fileID: 7797921801845181610, guid: c0e40940f10a35d43a84dd16a2a3c3af, type: 3}
   _shotgunFirePoint: {fileID: 1674439807}
   _shotgunFireForce: 5
+--- !u!1 &1700327910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1700327912}
+  - component: {fileID: 1700327911}
+  m_Layer: 0
+  m_Name: Test CircleFieldCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1700327911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700327910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1977761e5fdd6479c9887bca39331a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circles:
+  - position: {x: 0, y: 0}
+    radius: 10
+  - position: {x: 5, y: 10}
+    radius: 5
+--- !u!4 &1700327912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700327910}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1809806981
 GameObject:
   m_ObjectHideFlags: 0
