@@ -18,9 +18,10 @@ public class Cheese : LivingEntity
     [SerializeField] private float _mediumRange;
     [SerializeField] private float _closeRange;
 
-    [SerializeField] private float _farSpeed;
-    [SerializeField] private float _mediumSpeed;
-    [SerializeField] private float _closeSpeed;
+    [SerializeField] private float _speed;
+    //[SerializeField] private float _farSpeed;
+    //[SerializeField] private float _mediumSpeed;
+    //[SerializeField] private float _closeSpeed;
 
     private CheeseState _state;
 
@@ -33,7 +34,7 @@ public class Cheese : LivingEntity
         if (distanceFromRat >= _mediumRange) _state = CheeseState.Medium;
         if (distanceFromRat >= _farRange) _state = CheeseState.Far;
 
-        switch (_state)
+        /*switch (_state)
         {
             case CheeseState.Far: {
                 Move(_farSpeed);
@@ -47,11 +48,12 @@ public class Cheese : LivingEntity
                 Move(_closeSpeed);
                 break;
             }
-        }
+        }*/
+        Move(_speed);
     }
 
     private void Move(float speed) {
-        Vector2 direction = HordeController.Rats[0].transform.position;
+        Vector2 direction = HordeController.MeanRatPosition();
         Vector3 targetPos = new Vector3(direction.x, direction.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
     }

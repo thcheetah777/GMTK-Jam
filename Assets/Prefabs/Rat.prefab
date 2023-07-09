@@ -71,10 +71,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da9b1bf3e5440874bb5fad2425a10b40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 4
+  maxHealth: 1200
   trapInvinicibilityTime: 0.25
   flagIndex: 0
-  movementSpeed: 15
+  movementSpeedTimeOffset: 0
+  massTimeOffset: 0
 --- !u!1 &1139706845817453122
 GameObject:
   m_ObjectHideFlags: 0

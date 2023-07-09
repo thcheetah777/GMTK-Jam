@@ -1,8 +1,20 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HordeController : PausableMonoBehaviour
 {
+    private static HordeController s_instance;
+    public static HordeController Instance
+    {
+        get
+        {
+            if (s_instance == null)
+                s_instance = FindObjectOfType<HordeController>();
+            return s_instance;
+        }
+    }
+
     private static List<Rat> s_rats;
     public static List<Rat> Rats
     {
@@ -31,11 +43,6 @@ public class HordeController : PausableMonoBehaviour
 
     private static List<Vector3> s_flags;
     private static List<int> s_flagRefCounts;
-
-    /// <summary>
-    /// Gets the flag at the given index.
-    /// </summary>
-    public static Vector3 GetFlag(int index) => s_flags[index];
 
     /// <summary>
     /// Creates a new flag at the given position.
@@ -129,6 +136,33 @@ public class HordeController : PausableMonoBehaviour
         s_flagRefCounts.RemoveRange(s_flagRefCounts.Count - indecesDeleted, indecesDeleted);
     }
 
+    /// <summary>
+    /// Returns the closest rat position to the given point.
+    /// </summary>
+    public static Vector3 ClosestRatPosition(Vector3 point)
+    {
+        if (s_rats.Count == 0)
+            return point;
+
+        Vector3 _out = s_rats[0].transform.position;
+        float sqrDist = (_out - point).sqrMagnitude;
+
+        for (int i = 1; i < s_rats.Count; i++)
+        {
+            Vector3 i_ratPosition = s_rats[i].transform.position;
+            float i_sqrDist = (i_ratPosition - point).sqrMagnitude;
+            if (i_sqrDist < sqrDist)
+            {
+                _out = i_ratPosition;
+                sqrDist = i_sqrDist;
+            }
+        }
+
+        return _out;
+    }
+
+    public static Vector3 MeanRatPosition() => new Vector3(Rats.Sum(rat => rat.transform.position.x), Rats.Sum(rat => rat.transform.position.y)) / Rats.Count;
+
     private Vector3 m_mouseGroundPosition;
     private Vector3 m_initialMouseGroundPosition;
 
@@ -138,9 +172,21 @@ public class HordeController : PausableMonoBehaviour
     [SerializeField] private float minDragDistance;
     private bool m_dragging;
 
+    [Header("Cheese Reference")]
+    public Transform cheeseTransform;
+
     [Header("Rat Movement")]
+    public float minRatMovementSpeed;
+    public float maxRatMovementSpeed;
+    public float ratMovementSpeedWaveTime;
+    public float unfocusedSlowFactor;
+
+    [Header("Rat Distancing")]
     [SerializeField] private float ratDistancingSpeed;
     [SerializeField] private AnimationCurve ratDistancingWeight;
+    public float minRatMass;
+    public float maxRatMass;
+    public float ratMassWaveTime;
 
     [Header("Click Flags")]
     [SerializeField] private float clickFlagRadius;
@@ -155,8 +201,16 @@ public class HordeController : PausableMonoBehaviour
 
     private void Awake()
     {
+        if (s_instance == null)
+            s_instance = this;
+        else if (s_instance != this)
+            Destroy(gameObject);
+
         // Cache components.
         m_rakeCollider = GetComponent<EdgeCollider2D>();
+
+        // Initialize rats.
+        Rats.ForEach(InitRat);
     }
 
     public override void PausableUpdate()
@@ -169,21 +223,42 @@ public class HordeController : PausableMonoBehaviour
         else if (Input.GetMouseButtonUp(0))
             OnRelease();
 
-        // Push rats away from each other.
-        foreach (Rat rat in Rats)
-            foreach (Rat other in Rats)
-                if (rat != other)
-                {
-                    Vector3 distVector = rat.transform.position - other.transform.position;
-                    float dist = distVector.magnitude;
-                    float weightedDist = ratDistancingWeight.Evaluate(dist);
-                    if (weightedDist == 0)
-                        continue;
+        // Handle rat movement.
+        Rats.ForEach(MoveRat);
+    }
 
-                    Vector3 scaledDistVector = distVector * ratDistancingSpeed * weightedDist / dist * Time.deltaTime;
-                    rat.transform.position += scaledDistVector;
-                    other.transform.position -= scaledDistVector;
-                }
+    private void InitRat(Rat rat)
+    {
+        rat.movementSpeedTimeOffset = Random.Range(0, ratMovementSpeedWaveTime);
+        rat.massTimeOffset = Random.Range(0, ratMassWaveTime);
+    }
+
+    private void MoveRat(Rat rat)
+    {
+        // Follow focused flag.
+        bool focused = rat.flagIndex != -1;
+        Vector3 flag = focused ? s_flags[rat.flagIndex] : cheeseTransform.position;
+        float movementSpeed = Wave(minRatMovementSpeed, maxRatMovementSpeed, Time.realtimeSinceStartup + rat.movementSpeedTimeOffset, ratMovementSpeedWaveTime);
+        if (!focused)
+            movementSpeed *= unfocusedSlowFactor;
+        rat.transform.Translate((flag - rat.transform.position).normalized * movementSpeed * Time.deltaTime);
+
+        // Push away from other rats.
+        float mass = Wave(minRatMass, maxRatMass, Time.realtimeSinceStartup + rat.massTimeOffset, ratMassWaveTime);
+        foreach (Rat other in Rats)
+            if (rat != other)
+            {
+                Vector3 distVector = rat.transform.position - other.transform.position;
+                float dist = distVector.magnitude;
+                float weightedDist = ratDistancingWeight.Evaluate(dist);
+                if (weightedDist == 0)
+                    continue;
+
+                float otherMass = Wave(minRatMass, maxRatMass, Time.realtimeSinceStartup + other.massTimeOffset, ratMassWaveTime);
+                Vector3 scaledDistVector = distVector * ratDistancingSpeed * weightedDist / (dist * (mass + otherMass)) * Time.deltaTime;
+                rat.transform.position += scaledDistVector * otherMass;
+                other.transform.position -= scaledDistVector * mass;
+            }
     }
 
     private void OnDestroy()
@@ -204,7 +279,7 @@ public class HordeController : PausableMonoBehaviour
     private void OnHold()
     {
         if (!Input.GetMouseButtonDown(0))
-            CalculateMouseGroundPosition();
+            m_mouseGroundPosition = MouseGroundPosition();
 
         // Calculate the smoothed position of the mouse by averaging over the last few frames.
         Vector3 deltaMouseGroundPosition = m_mouseGroundPosition - transform.position;
@@ -237,7 +312,7 @@ public class HordeController : PausableMonoBehaviour
     private void OnPress()
     {
         // Capture the initial ground position the mouse clicks.
-        CalculateMouseGroundPosition();
+        m_mouseGroundPosition = MouseGroundPosition();
         m_initialMouseGroundPosition = m_mouseGroundPosition;
     }
 
@@ -279,11 +354,11 @@ public class HordeController : PausableMonoBehaviour
 
     }
 
-    private void CalculateMouseGroundPosition()
+    private Vector3 MouseGroundPosition()
     {
         // Get the ground position the mouse is over.
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        m_mouseGroundPosition = mouseRay.origin - mouseRay.origin.z * mouseRay.direction / mouseRay.direction.z;
+        return mouseRay.origin - mouseRay.origin.z * mouseRay.direction / mouseRay.direction.z;
     }
 
     private void SetRakeColliderWidth(float width)
@@ -302,4 +377,6 @@ public class HordeController : PausableMonoBehaviour
             width / 2 * Vector2.left
         });
     }
+
+    private float Wave(float min, float max, float time, float timeScale) => ((min + max) + (max - min) * Mathf.Cos(Mathf.PI * time / (2 * timeScale))) / 2;
 }

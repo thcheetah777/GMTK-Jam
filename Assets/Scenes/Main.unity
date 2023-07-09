@@ -468,10 +468,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.1183882
-    y: 0.054455448
-    width: 0.76276964
-    height: 0.89108914
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -520,6 +520,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 250009084}
+  forwardMoveSpeed: 1.5
+  sidewaysMoveSpeed: 0.5
+  leadingFactor: 0.25
 --- !u!114 &172592715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1881,40 +1884,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxClickTime: 0.25
   minDragDistance: 1.5
-  ratDistancingSpeed: 3
+  cheeseTransform: {fileID: 1253283214}
+  minRatMovementSpeed: 10
+  maxRatMovementSpeed: 21
+  ratMovementSpeedWaveTime: 0.562
+  unfocusedSlowFactor: 0.5
+  ratDistancingSpeed: 2
   ratDistancingWeight:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.038850546
-      value: 3.592711
+      time: 0
+      value: 3
       inSlope: 0.04419029
-      outSlope: 0.04419029
-      tangentMode: 0
+      outSlope: Infinity
+      tangentMode: 97
       weightedMode: 0
       inWeight: 0
       outWeight: 1
     - serializedVersion: 3
-      time: 1.3983002
-      value: 3.5072098
-      inSlope: -0.06289398
-      outSlope: -0.60397196
+      time: 1
+      value: 1
+      inSlope: -2
+      outSlope: -0.10346883
       tangentMode: 5
       weightedMode: 0
       inWeight: 1
-      outWeight: 0.2596224
+      outWeight: 0.19058129
     - serializedVersion: 3
-      time: 5
+      time: 15
       value: 0
-      inSlope: 0.19709182
-      outSlope: 0.19709182
+      inSlope: 0.0895879
+      outSlope: 0.0895879
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.24615383
+      inWeight: 0.10853566
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  minRatMass: 0.25
+  maxRatMass: 4
+  ratMassWaveTime: 0.9
   clickFlagRadius: 50
   rakeWidth: 8
   rakeStartupTime: 0.2
@@ -3142,7 +3153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1253283214
 Transform:
   m_ObjectHideFlags: 0
@@ -3151,7 +3162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253283213}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.5, y: 0, z: -1}
+  m_LocalPosition: {x: -11.55, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3172,17 +3183,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916af660b58e4144a8c05ded96740b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 240
+  maxHealth: 24000
   trapInvinicibilityTime: 0.5
   ratLayer:
     serializedVersion: 2
     m_Bits: 8
-  _farRange: 10
-  _mediumRange: 5
-  _closeRange: 2
-  _farSpeed: 2
-  _mediumSpeed: -2
-  _closeSpeed: -5.5
+  _farRange: 12
+  _mediumRange: 6
+  _closeRange: 4
+  _speed: -9
 --- !u!58 &1253283216
 CircleCollider2D:
   m_ObjectHideFlags: 0

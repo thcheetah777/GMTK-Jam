@@ -31,4 +31,9 @@ public static class Mathx
     /// Returns the smallest multiple of d greater than or equal to f.
     /// </summary>
     public static int CeilToNearestInt(float f, int d) => d * Mathf.CeilToInt(f / d);
+
+    /// <summary>
+    /// Returns the negative of the vector if it is facing more than 90 degrees away from the target direction.
+    /// </summary>
+    public static Vector2 AlignTo(this Vector2 vector, Vector2 direction) => vector * Mathf.Sign(Vector2.Dot(vector, direction));
 }
