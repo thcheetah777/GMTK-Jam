@@ -39,12 +39,12 @@ public class CheeseBar : PausableMonoBehaviour {
         float alpha = (health % mul) / (mul - 1f);
         baseRenderer.sprite = baseSprites[index];
         baseBRenderer.sprite = index == 0 ? baseSprites[index] : baseSprites[nindex];
-        baseBRenderer.color = baseBRenderer.color.WithAlpha(alpha);
+        baseBRenderer.color = new Color(baseBRenderer.color.r, baseBRenderer.color.g, baseBRenderer.color.b, alpha);
         fillRenderer.sprite = fillSprites[index];
         fillBRenderer.sprite = index == 0 ? fillSprites[index] : fillSprites[nindex];
-        fillBRenderer.color = fillBRenderer.color.WithAlpha(alpha);
+        fillBRenderer.color = new Color(fillBRenderer.color.r, fillBRenderer.color.g, fillBRenderer.color.b, alpha);
         iconRenderer.sprite = iconSprites[index];
         iconBRenderer.sprite = index == 0 ? iconSprites[index] : iconSprites[nindex];
-        iconBRenderer.color = iconBRenderer.color.WithAlpha(alpha);
+        iconBRenderer.color = new Color(iconBRenderer.color.r, iconBRenderer.color.g, iconBRenderer.color.b, alpha);
     }
 }
