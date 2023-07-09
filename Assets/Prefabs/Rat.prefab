@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 728838389013215491}
   - component: {fileID: 728838389013215489}
   - component: {fileID: 728838389013215493}
+  - component: {fileID: 6521536111974218508}
   m_Layer: 3
   m_Name: Rat
   m_TagString: Untagged
@@ -75,6 +76,19 @@ MonoBehaviour:
   trapInvinicibilityTime: 0.25
   flagIndex: 0
   movementSpeed: 15
+--- !u!114 &6521536111974218508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728838389013215488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126939e1663be234a854fa85e75877df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 8915409680031344331, guid: 536aad0229c0a4a42870b944f306dafd, type: 3}
 --- !u!1 &1139706845817453122
 GameObject:
   m_ObjectHideFlags: 0
