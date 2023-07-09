@@ -248,7 +248,7 @@ public class HordeController : PausableMonoBehaviour
         foreach (Rat other in Rats)
             if (rat != other)
             {
-                Vector3 distVector = rat.transform.position - other.transform.position;
+                Vector2 distVector = rat.transform.position - other.transform.position;
                 float dist = distVector.magnitude;
                 float weightedDist = ratDistancingWeight.Evaluate(dist);
                 if (weightedDist == 0)

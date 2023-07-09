@@ -23,10 +23,10 @@ public class CheeseWeapon : PausableMonoBehaviour
     }
 
     private void UseShotgun() {
-        // ! THIS IS BROKEN, THE SHOTGUN IS POINTING IN THE WRONG DIRECTION
-        _shotgunFirePoint.rotation = Quaternion.LookRotation(Vector3.forward, Quaternion.identity * (HordeController.Rats[0].transform.position - _shotgunFirePoint.position));
+        Vector3 direction = HordeController.ClosestRatPosition(_shotgunFirePoint.position) - _shotgunFirePoint.position;
+        _shotgunFirePoint.rotation = Quaternion.LookRotation(direction - _shotgunFirePoint.position, Vector3.back);
         Rigidbody bullet = Instantiate(_shotgunBulletPrefab, _shotgunFirePoint.position, _shotgunFirePoint.rotation);
-        bullet.AddRelativeForce(Vector3.forward * _shotgunFireForce, ForceMode.Impulse);
+        bullet.AddForce(direction * _shotgunFireForce, ForceMode.Impulse);
     }
 
     private void UseBomb() {
