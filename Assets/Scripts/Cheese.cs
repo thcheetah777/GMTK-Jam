@@ -56,7 +56,7 @@ public class Cheese : LivingEntity
         Vector3 direction = HordeController.MeanRatPosition();
         Vector3 targetPos = new Vector3(direction.x, direction.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
-        transform.rotation = Quaternion.LookRotation(-(direction - transform.position), Vector3.forward);
+        transform.rotation = Quaternion.LookRotation(direction - transform.position, Vector3.forward);
     }
 
     protected override void OnDeath()
