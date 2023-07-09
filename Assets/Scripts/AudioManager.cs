@@ -11,9 +11,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip menu;
     public AudioClip shotgun;
 
+    public AudioClip[] ratDeaths;
+
     // Singleton pattern
     static public AudioManager I = null;
-    
+
     void Awake() {
         if (I == null) I = this;
         else if (I != this) Destroy(gameObject);
@@ -21,6 +23,10 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(AudioClip clip) {
         source.PlayOneShot(clip);
+    }
+
+    public void PlayRandomSound(AudioClip[] clips) {
+        source.PlayOneShot(clips[Random.Range(0, clips.Length)]);
     }
 
 }

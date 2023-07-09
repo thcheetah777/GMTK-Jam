@@ -18,6 +18,7 @@ public class Rat : LivingEntity
 
     protected override void OnDeath()
     {
+        AudioManager.I.PlayRandomSound(AudioManager.I.ratDeaths);
         HordeController.RemoveRat(this);
         Destroy(gameObject);
     }

@@ -6178,6 +6178,10 @@ MonoBehaviour:
   button: {fileID: 8300000, guid: d74226c28e5e88245a4c82bf1699929b, type: 3}
   menu: {fileID: 8300000, guid: b3630d512df27544396b2366eb542a88, type: 3}
   shotgun: {fileID: 8300000, guid: a5c37787d90d3224b958a64081d4f00f, type: 3}
+  ratDeaths:
+  - {fileID: 8300000, guid: 15875a67207e1334f8198d66982832ee, type: 3}
+  - {fileID: 8300000, guid: 645a5c14b4ebbf645b973c9fce2937f9, type: 3}
+  - {fileID: 8300000, guid: e76ab893b6ca1c64fa402e4996b34dfb, type: 3}
 --- !u!1001 &639760163
 PrefabInstance:
   m_ObjectHideFlags: 0
