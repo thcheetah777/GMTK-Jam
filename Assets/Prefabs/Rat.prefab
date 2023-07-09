@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 728838389013215491}
   - component: {fileID: 728838389013215493}
   - component: {fileID: -1087904476841238627}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rat
   m_TagString: Rat
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6707816791787734179}
   - component: {fileID: 451492741255027393}
   - component: {fileID: 8493108967235776461}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 1801058209388145437}
   - component: {fileID: 578488220090583875}
   - component: {fileID: 8511442420697581077}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3379480361893791935}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
