@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7797921801845181614}
   - component: {fileID: 7797921801845181611}
   - component: {fileID: 7797921801845181610}
+  - component: {fileID: -6599905231194165650}
+  - component: {fileID: -7833262567319228300}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -114,3 +116,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-6599905231194165650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7797921801845181600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1977761e5fdd6479c9887bca39331a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circles:
+  - position: {x: -5.4517803, y: -0.0025839508}
+    radius: -5.630065
+--- !u!114 &-7833262567319228300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7797921801845181600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bc31f62fc081e4d8c543350d53a982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
