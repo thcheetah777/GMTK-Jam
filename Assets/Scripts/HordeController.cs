@@ -161,7 +161,7 @@ public class HordeController : PausableMonoBehaviour
         return _out;
     }
 
-    public static Vector3 MeanRatPosition() => new Vector3(Rats.Sum(rat => rat.transform.position.x), Rats.Sum(rat => rat.transform.position.y)) / Rats.Count;
+    public static Vector2 MeanRatPosition() => new Vector2(Rats.Sum(rat => rat.transform.position.x), Rats.Sum(rat => rat.transform.position.y)) / Rats.Count;
 
     private Vector3 m_mouseGroundPosition;
     private Vector3 m_initialMouseGroundPosition;
@@ -256,8 +256,10 @@ public class HordeController : PausableMonoBehaviour
 
                 float otherMass = Wave(minRatMass, maxRatMass, Time.realtimeSinceStartup + other.massTimeOffset, ratMassWaveTime);
                 Vector3 scaledDistVector = distVector * ratDistancingSpeed * weightedDist / (dist * (mass + otherMass)) * Time.deltaTime;
+                // ! PLZ WORK PLZ WORK
                 rat.transform.position += scaledDistVector * otherMass;
                 other.transform.position -= scaledDistVector * mass;
+                rat.transform.position *= Vector2.one;
             }
     }
 

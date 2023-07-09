@@ -22,4 +22,12 @@ public class Rat : LivingEntity
         HordeController.RemoveRat(this);
         Destroy(gameObject);
     }
+
+    void OnTrigger2DEnter(Collider2D trigger) {
+        print(trigger.tag);
+        if (trigger.CompareTag("Bullet"))
+        {
+            OnDeath();
+        }
+    }
 }
