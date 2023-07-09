@@ -4368,7 +4368,7 @@ MonoBehaviour:
   _weaponDelay: 1
   _shotgunBulletPrefab: {fileID: 7797921801845181610, guid: c0e40940f10a35d43a84dd16a2a3c3af, type: 3}
   _shotgunFirePoint: {fileID: 1674439807}
-  _shotgunFireForce: 5
+  _shotgunFireForce: 10
 --- !u!1 &1700327910
 GameObject:
   m_ObjectHideFlags: 0
