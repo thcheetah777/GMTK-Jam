@@ -26,7 +26,7 @@ public abstract class LivingEntity : PausableMonoBehaviour
                 health -= Trap.Damage;
                 if (health <= 0)
                 {
-                    OnDeath();
+                    // OnDeath();
                     break;
                 }
                 yield return new WaitForSeconds(trapInvinicibilityTime);
@@ -35,5 +35,5 @@ public abstract class LivingEntity : PausableMonoBehaviour
                 yield return null;
     }
 
-    protected abstract void OnDeath();
+    // abstract void OnDeath();
 }

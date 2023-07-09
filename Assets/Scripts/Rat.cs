@@ -16,7 +16,7 @@ public class Rat : LivingEntity
         flagIndex = -1;
     }
 
-    protected override void OnDeath()
+    public void Die()
     {
         AudioManager.I.PlayRandomSound(AudioManager.I.ratDeaths);
         HordeController.RemoveRat(this);

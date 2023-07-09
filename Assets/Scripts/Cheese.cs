@@ -59,8 +59,8 @@ public class Cheese : LivingEntity
         transform.rotation = Quaternion.LookRotation(direction - transform.position, Vector3.forward);
     }
 
-    protected override void OnDeath()
-    {
+    // protected override void OnDeath()
+    // {
 
-    }
+    // }
 }
